@@ -7,8 +7,9 @@ import view
 
 if __name__ == "__main__":
 
-    model = model.Model()
-    controller = controller.Controller(model, view)
     window = Tk()
+    model = model.Model()
+    controller = controller.Controller(model)
     app = View(window,controller)
+    
     window.mainloop()
