@@ -25,6 +25,7 @@ class Controller:
             self.view.canvas.move("all", 0,-10)
         elif event.keysym=='r':
             self.view.canvas.delete('all')
+            #self.view.devices = self.model.get_new_devices(self.view.devices)
             self.view.devices.append(Device("192.168.88.67","00:1B:44:11:3A:B7", "Clément"))
             self.view.create_router(self.view.router, self.view.window, self.view.image_router)
             self.image_list = self.view.create_devices(self.view.devices, self.view.positions,self.view.win_width,self.view.win_height, self.view.image_router )

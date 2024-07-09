@@ -10,6 +10,7 @@ import scapy.all as scapy
 class Model:
 
     def get_devices():
+        
         ca = sniff(iface = 'Wi-Fi',count= 5)
         request = scapy.ARP()
         network=Network()
@@ -32,5 +33,31 @@ class Model:
             devices.append(device)
             print(ip,mac_address, device_name)
 
+        return devices
+
+    def get_new_devices(devices):
+
+        ca = sniff(iface = 'Wi-Fi',count= 5)
+        request = scapy.ARP()
+        network=Network()
+        request.pdst = str(network.ip)+"/"+str(network.mask)
+        broadcast = scapy.Ether()
+        broadcast.dst = 'ff:ff:ff:ff:ff:ff'
+        hostname = socket.gethostname() 
+        IPAddr = socket.gethostbyname(hostname)
+        request_broadcast = broadcast / request
+        clients = scapy.srp(request_broadcast, timeout = 1)[0]
+
+        for device in clients:
+            ip=str(device[1].psrc)
+            is_in_devices = True if  len([i for i in devices if i.ip == ip]) !=0 else False
+            if not is_in_devices:
+                mac_address = str(device[1].hwsrc)
+                device_name = str(socket.getfqdn(ip))
+                device_name = device_name if device_name.count(".") == 0 else "NaN"
+                if ip[-1]=="1" and ip[-2] == ".": device_name = "Router"
+                device = Device(ip, mac_address, device_name)
+                devices.append(device)
+            
         return devices
 

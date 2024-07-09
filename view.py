@@ -9,6 +9,7 @@ from PIL import Image, ImageTk
 from tktooltip import ToolTip
 import numpy as np
 from idlelib.tooltip import Hovertip
+import Pmw
 
 #from ToolTip import ToolTip, CreateToolTip
 PATH_IMAGES = r"C:\Users\clovi\OneDrive\Documents\network_analyser\network_analyser\images"
@@ -68,7 +69,8 @@ class View:
             self.canvas.create_text(positions[i][0]-(positions[i][2]*0.35) , positions[i][1]-(positions[i][3]*0.35), 
                                     text=label_text, font=("Helvetica", 16), fill="black")
             image_list.append(image_tip)
-            tip = Balloon(self.window,bg='grey87',initwait=50)
+            tip = Balloon(self.window,bg='black',initwait=50)
+
             informations = "Name : " + devices[i].name + "\n" + "IP : " + devices[i].ip+ "\n" +  "MAC Address : " + devices[i].mac_address
             tip.bind_widget(label,balloonmsg=informations)
 
